@@ -17,6 +17,22 @@ class WebPageBrowsing(unittest.TestCase):
         self.driver.get('https://slateci.io/')
         self.driver.set_window_size(1920, 1080)
     
+    def test_home_page(self):
+        main_page = page.BasePage(self.driver)
+        main_page.go_to_home_page()
+        home_page = page.HomePage(self.driver)
+
+        home_page.wait_for_page_loaded()
+        links_in_try_slate = home_page.get_links_in_try_slate()
+        number_of_links = len(links_in_try_slate)
+        for i in range(number_of_links):
+            print(links_in_try_slate[i].get_attribute('href'))
+            links_in_try_slate[i].click()
+            self.driver.implicitly_wait(5)
+            self.driver.back()
+            home_page.wait_for_page_loaded()
+            links_in_try_slate = home_page.get_links_in_try_slate()
+    
     def skip_test_about_page(self):
         main_page = page.BasePage(self.driver)
         main_page.go_to_about_page()
@@ -59,12 +75,36 @@ class WebPageBrowsing(unittest.TestCase):
         docs_page = page.DocsPage(self.driver)
         docs_page.wait_for_page_loaded()
 
-        links = docs_page.get_links_in_doc_content()
-        for i in links:
-            print(i.get_attribute('href'))
+        side_menu_btns = docs_page.get_main_items_in_side_menu()
+        number_of_btns = len(side_menu_btns)
+        for i in range(number_of_btns):
+            print('index i:', i)
+            print(side_menu_btns[i].get_attribute('href'))
+            side_menu_btns[i].click()
+            self.driver.implicitly_wait(5)
+            print('-'*40)
+            
+            active_side_links = docs_page.get_links_in_active_side_item()
+            number_of_active_links = len(active_side_links)
+            for j in range(number_of_active_links):
+                print('index j:', j)
+                print(active_side_links[j].get_attribute('href'))
+                active_side_links[j].click()
+                self.driver.implicitly_wait(5)
+                # iterate through the content links
+                # if active_side_links[j].text == 'SLATE CLI Manual':
+                #     continue
+                # docs_page.iterate_links_doc_content()
+                # get the side links again
+                active_side_links = docs_page.get_links_in_active_side_item()
+
+            print('*'*40)
+
+            side_menu_btns = docs_page.get_main_items_in_side_menu()
+
     
 
-    def test_blog_page(self):
+    def skip_test_blog_page(self):
         main_page = page.BasePage(self.driver)
         main_page.go_to_blog_page()
         blog_page = page.BlogPage(self.driver)
@@ -74,11 +114,20 @@ class WebPageBrowsing(unittest.TestCase):
         while True:
             # iterate links
             links = blog_page.get_links_in_container_blog()
-            for i in links:
-                print(i.get_attribute('href'))
+            number_of_links = len(links)
+            for i in range(number_of_links):
+                # print(links[i].get_attribute('href'))
+                # print(links[i].text)
+                if links[i].text == 'Older' or links[i].text == 'Newer' or links[i].get_attribute('href')=='https://slateci.io/feed.xml':
+                    continue
+                links[i].click()
+                self.driver.implicitly_wait(5)
+                self.driver.back()
+                blog_page.wait_for_page_loaded()
+                links = blog_page.get_links_in_container_blog()
 
 
-            # click order button
+            # click Order button
             older_btn = blog_page.get_older_btn()
             if not older_btn:
                 break

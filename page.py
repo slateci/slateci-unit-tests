@@ -20,7 +20,8 @@ class BasePage():
         self.driver.back()
 
     def go_to_home_page(self):
-        pass
+        home_btn = self.driver.find_element(*BasePageLocators.HOME_TOP_BTN)
+        home_btn.click()
     
     def go_to_about_page(self):
         about_btn = self.driver.find_element(*BasePageLocators.ABOUT_TOP_BTN)
@@ -44,7 +45,15 @@ class BasePage():
 
 
 class HomePage(BasePage):
-    pass
+    def wait_for_page_loaded(self):
+        WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located((By.XPATH, "//div[@class='row d-flex justify-content-between px-5']"))
+        )
+    
+    def get_links_in_try_slate(self):
+        field1 = self.driver.find_element_by_xpath("//div[@class='row d-flex justify-content-between px-5']")
+        links = field1.find_elements_by_tag_name('a')
+        return links
 
 
 class AboutPage(BasePage):
@@ -89,6 +98,32 @@ class DocsPage(BasePage):
         doc_content = self.driver.find_element_by_id('doc-content')
         links = doc_content.find_elements_by_tag_name('a')
         return links
+
+    # needs debug for SLATE CLI Manual
+    def iterate_links_doc_content(self):
+        links = self.get_links_in_doc_content()
+        number_of_links = len(links)
+        for i in range(number_of_links):
+            links[i].click()
+            self.driver.implicitly_wait(5)
+            #here check 404/500?
+            self.driver.back()
+            self.wait_for_page_loaded()
+            links = self.get_links_in_doc_content()
+    
+    def get_main_items_in_side_menu(self):
+        # side_menu = self.driver.find_element_by_id('side-menu')
+        items = self.driver.find_elements_by_xpath("//li[@class='parent-li']/a[@role='button']")
+        # links = self.driver.find_elements_by_xpath("//dic[@id='side-menu']/ul/li[@class='parent-li']")
+        return items
+
+    def get_links_in_active_side_item(self):
+        active_item = self.driver.find_element_by_xpath("//div[@class='collapse collapsable-parent show active-menu-link']")
+        links = active_item.find_elements_by_tag_name('a')
+        return links
+    
+    
+
 
 
 class BlogPage(BasePage):
