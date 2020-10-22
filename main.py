@@ -95,6 +95,7 @@ class WebPageBrowsing(unittest.TestCase):
             
             active_side_links = docs_page.get_links_in_active_side_item()
             if not active_side_links:
+                docs_page.iterate_links_doc_content()
                 side_menu_btns = docs_page.get_main_items_in_side_menu()
                 continue
             number_of_active_links = len(active_side_links)
@@ -104,10 +105,12 @@ class WebPageBrowsing(unittest.TestCase):
                 print(active_side_links[j].get_attribute('href'))
                 active_side_links[j].click()
                 self.driver.implicitly_wait(5)
+                cur_page = page.BasePage(self.driver)
+                assert cur_page.is_page_valid()
                 # iterate through the content links
                 # if active_side_links[j].text == 'SLATE CLI Manual':
                 #     continue
-                # docs_page.iterate_links_doc_content()
+                docs_page.iterate_links_doc_content()
                 # get the side links again
                 active_side_links = docs_page.get_links_in_active_side_item()
 
