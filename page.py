@@ -16,6 +16,10 @@ class BasePage():
     def get_page_source(self):
         return self.driver.page_source
 
+    def is_page_valid(self):
+        pg_source = self.driver.page_source
+        return '404' not in pg_source or 'Page not found' not in pg_source
+
     def click_back_btn(self):
         self.driver.back()
 
@@ -99,6 +103,7 @@ class DocsPage(BasePage):
         links = doc_content.find_elements_by_tag_name('a')
         return links
 
+
     # needs debug for SLATE CLI Manual
     def iterate_links_doc_content(self):
         links = self.get_links_in_doc_content()
@@ -107,6 +112,7 @@ class DocsPage(BasePage):
             links[i].click()
             self.driver.implicitly_wait(5)
             #here check 404/500?
+            assert self.is_page_valid()
             self.driver.back()
             self.wait_for_page_loaded()
             links = self.get_links_in_doc_content()
@@ -118,9 +124,12 @@ class DocsPage(BasePage):
         return items
 
     def get_links_in_active_side_item(self):
-        active_item = self.driver.find_element_by_xpath("//div[@class='collapse collapsable-parent show active-menu-link']")
-        links = active_item.find_elements_by_tag_name('a')
-        return links
+        try:
+            active_item = self.driver.find_element_by_xpath("//div[@class='collapse collapsable-parent show active-menu-link']")
+            links = active_item.find_elements_by_tag_name('a')
+            return links
+        except:
+            None
     
     
 
