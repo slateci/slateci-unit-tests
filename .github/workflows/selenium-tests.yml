@@ -33,7 +33,7 @@ jobs:
           wget https://chromedriver.storage.googleapis.com/85.0.4183.87/chromedriver_linux64.zip
           unzip chromedriver_linux64.zip
           rm chromedriver_linux64.zip
-          export PATH=$PATH:/home/runner/work/slate-portal/slate-portal/ >> ~/.profile
+          export PATH=$PATH:/home/runner/work/slateci-unit-tests/slateci-unit-tests/ >> ~/.profile
           # ls
           # pwd
       - name: Run Selenium Tests inside Repo
