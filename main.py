@@ -49,10 +49,21 @@ class WebPageBrowsing(unittest.TestCase):
         number_of_links = len(links)
         for i in range(number_of_links):
             print(links[i].get_attribute('href'))
+            # here skip the links end with .pdf
+            # because selenium will download the pdf in headless mode
+            # after that I was unable to track the driver 
+            # if links[i].get_attribute('href')[-4:] == '.pdf':
+            #     continue
+
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver)
             assert cur_page.is_page_valid()
+
+            print(cur_page.get_page_title())
+
+            if cur_page.get_page_title() == 'SLATE / About':
+                continue
             self.driver.back()
             about_page.wait_for_page_loaded()
             links = about_page.get_all_links()

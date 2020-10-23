@@ -65,8 +65,11 @@ class AboutPage(BasePage):
     #     print('enter about page')
     def wait_for_page_loaded(self):
         WebDriverWait(self.driver, 20).until(
-            EC.presence_of_element_located((By.ID, 'acknowledging-slate'))
+            EC.presence_of_element_located((By.XPATH, "//h2[@id='journal-and-conference-papers']"))
         )
+        # WebDriverWait(self.driver, 20).until(
+        #     EC.presence_of_element_located((By.ID, 'journal-and-conference-papers'))
+        # )
     def get_all_links(self):
         field1 = self.driver.find_element_by_xpath("//div[@id='top-of-page']/div[2]")
         links = field1.find_elements_by_tag_name('a')
