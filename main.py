@@ -9,9 +9,9 @@ import time
 
 class WebPageBrowsing(unittest.TestCase):
     def setUp(self):
-        path = '/Users/lizhang/Documents/webdriver/chromedriver'
+        # path = '/Users/lizhang/Documents/webdriver/chromedriver'
         # path = '/home/runner/work/slateci-unit-tests/slateci-unit-tests/chromedriver'
-        # path = '/home/runner/work/slateci.github.io/slateci.github.io/chromedriver'
+        path = '/home/runner/work/slateci.github.io/slateci.github.io/chromedriver'
         options = ChromeOptions()
         options.headless = True
         self.driver = Chrome(executable_path=path, options=options)
@@ -90,6 +90,7 @@ class WebPageBrowsing(unittest.TestCase):
         for i in range(number_of_btns):
             print('index i:', i)
             print(side_menu_btns[i].get_attribute('href'))
+            print(side_menu_btns[i].text)
             side_menu_btns[i].click()
             self.driver.implicitly_wait(5)
             assert docs_page.is_page_valid()
@@ -105,6 +106,7 @@ class WebPageBrowsing(unittest.TestCase):
             for j in range(number_of_active_links):
                 print('index j:', j)
                 print(active_side_links[j].get_attribute('href'))
+                print('\t{}'.format(active_side_links[j].text))
                 active_side_links[j].click()
                 self.driver.implicitly_wait(5)
                 cur_page = page.BasePage(self.driver)
