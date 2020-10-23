@@ -11,13 +11,13 @@ class WebPageBrowsing(unittest.TestCase):
     def setUp(self):
         path_local = '/Users/lizhang/Documents/webdriver/chromedriver'
         options = ChromeOptions()
-        options.headless = False
+        options.headless = True
         self.driver = Chrome(executable_path=path_local, options=options)
 
         self.driver.get('https://slateci.io/')
         self.driver.set_window_size(1920, 1080)
     
-    def skiptest_home_page(self):
+    def test_home_page(self):
         main_page = page.BasePage(self.driver)
         main_page.go_to_home_page()
         home_page = page.HomePage(self.driver)
@@ -36,7 +36,7 @@ class WebPageBrowsing(unittest.TestCase):
             home_page.wait_for_page_loaded()
             links_in_try_slate = home_page.get_links_in_try_slate()
     
-    def skiptest_about_page(self):
+    def test_about_page(self):
         main_page = page.BasePage(self.driver)
         main_page.go_to_about_page()
         about_page = page.AboutPage(self.driver)
@@ -55,7 +55,7 @@ class WebPageBrowsing(unittest.TestCase):
             about_page.wait_for_page_loaded()
             links = about_page.get_all_links()
     
-    def skiptest_tech_page(self):
+    def test_tech_page(self):
         main_page = page.BasePage(self.driver)
         main_page.go_to_tech_page()
         tech_page = page.TechPage(self.driver)
@@ -119,7 +119,7 @@ class WebPageBrowsing(unittest.TestCase):
 
     
 
-    def skiptest_blog_page(self):
+    def test_blog_page(self):
         main_page = page.BasePage(self.driver)
         main_page.go_to_blog_page()
         blog_page = page.BlogPage(self.driver)
@@ -151,7 +151,7 @@ class WebPageBrowsing(unittest.TestCase):
             blog_page.wait_for_page_loaded()
 
     
-    def skiptest_comm_page(self):
+    def test_comm_page(self):
         main_page = page.BasePage(self.driver)
         main_page.go_to_comm_page()
         comm_page = page.CommPage(self.driver)
