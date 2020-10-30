@@ -9,11 +9,11 @@ import time
 
 class WebPageBrowsing(unittest.TestCase):
     def setUp(self):
-        path = '/Users/lizhang/Documents/webdriver/chromedriver'
+        # path = '/Users/lizhang/Documents/webdriver/chromedriver'
         # path = '/home/runner/work/slateci-unit-tests/slateci-unit-tests/chromedriver'
-        # path = '/home/runner/work/slateci.github.io/slateci.github.io/chromedriver'
+        path = '/home/runner/work/slateci.github.io/slateci.github.io/chromedriver'
         options = ChromeOptions()
-        options.headless = False
+        options.headless = True
         self.driver = Chrome(executable_path=path, options=options)
 
         self.driver.get('https://slateci.io/')
