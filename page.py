@@ -107,32 +107,22 @@ class DocsPage(BasePage):
         return links
 
 
-    # needs debug for SLATE CLI Manual
-    def iterate_links_doc_content(self):
+    def iterate_links_doc_content(self, linkL1, linkL2):
         links = self.get_links_in_doc_content()
         number_of_links = len(links)
 
-        # print to check error
-        # for i in range(number_of_links):
-        #     print('index: ', i)
-        #     print(links[i].get_attribute('href'))
-        #     print('here', links[i].text)
-
         for i in range(number_of_links):
-            print('index: ', i)
-            print(links[i].get_attribute('href'))
-            print('here', links[i].text)
-            if links[i].text in ['for Linux', 'for Mac OS', 'Utilize SLATE', 'A Docker-in-Docker Kubernetes node', 'security@slateci.io'] \
+            # print('url:', links[i].get_attribute('href'))
+            print('Docs Page: {} -> {} -> {}'.format(linkL1, linkL2, links[i].text))
+            if links[i].text in ['for Linux', 'for Mac OS', 'A Docker-in-Docker Kubernetes node'] \
             or 'mailto:' in links[i].get_attribute('href'):
                 # 'for Linux', 'for Mac OS' to prevent download
-                # 'Utilize SLATE' because it's currently broken
-                # 'A Docker-in-Docker Kubernetes node' 404
-                # 'Docker Hub', 'excellent Kubernetes documentation' need to handle new tab
+                # 'A Docker-in-Docker Kubernetes node' 404, link to fix still unknown
                 continue
             links[i].click()
             self.driver.implicitly_wait(5)
             # here check 404/500
-            print('titletitle', self.get_page_title())
+            # print('page title:', self.get_page_title())
             assert self.is_page_valid()
 
             # in case a new tab is open, close tab and switch back to original tab
@@ -145,12 +135,10 @@ class DocsPage(BasePage):
             self.driver.back()
             self.wait_for_page_loaded()
             links = self.get_links_in_doc_content()
-            print('length is:', len(links))
+            # print('length is:', len(links))
     
     def get_main_items_in_side_menu(self):
-        # side_menu = self.driver.find_element_by_id('side-menu')
         items = self.driver.find_elements_by_xpath("//li[@class='parent-li']/a[@role='button']")
-        # links = self.driver.find_elements_by_xpath("//dic[@id='side-menu']/ul/li[@class='parent-li']")
         return items
 
     def get_links_in_active_side_item(self):
@@ -160,8 +148,6 @@ class DocsPage(BasePage):
             return links
         except:
             None
-    
-    
 
 
 

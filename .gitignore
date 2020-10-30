@@ -11,3 +11,6 @@ rebates/logs/
 !/*requirements.txt
 *.iif
 *.pem
+
+# downloaded pdfs during test
+*.pdf

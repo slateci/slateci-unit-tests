@@ -29,7 +29,7 @@ class WebPageBrowsing(unittest.TestCase):
         links_in_try_slate = home_page.get_links_in_try_slate()
         number_of_links = len(links_in_try_slate)
         for i in range(number_of_links):
-            print(links_in_try_slate[i].get_attribute('href'))
+            print('Home Page: Try SLATE -> {}'.format(links_in_try_slate[i].text))
             links_in_try_slate[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver)
@@ -49,11 +49,6 @@ class WebPageBrowsing(unittest.TestCase):
         number_of_links = len(links)
         for i in range(number_of_links):
             print(links[i].get_attribute('href'))
-            # here skip the links end with .pdf
-            # because selenium will download the pdf in headless mode
-            # after that I was unable to track the driver 
-            # if links[i].get_attribute('href')[-4:] == '.pdf':
-            #     continue
 
             links[i].click()
             self.driver.implicitly_wait(5)
@@ -78,7 +73,8 @@ class WebPageBrowsing(unittest.TestCase):
         links = tech_page.get_all_links()
         number_of_links = len(links)
         for i in range(number_of_links):
-            print(links[i].get_attribute('href'))
+            # print(links[i].get_attribute('href'))
+            print('Tech Page: {}'.format(links[i].text))
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver)
@@ -99,13 +95,11 @@ class WebPageBrowsing(unittest.TestCase):
         side_menu_btns = docs_page.get_main_items_in_side_menu()
         number_of_btns = len(side_menu_btns)
         for i in range(number_of_btns):
-            print('index i:', i)
-            print(side_menu_btns[i].get_attribute('href'))
-            print(side_menu_btns[i].text)
+            # print(side_menu_btns[i].get_attribute('href'))
+            linkL1 = side_menu_btns[i].text
             side_menu_btns[i].click()
             self.driver.implicitly_wait(5)
             assert docs_page.is_page_valid()
-            print('-'*40)
             
             active_side_links = docs_page.get_links_in_active_side_item()
             if not active_side_links:
@@ -113,23 +107,18 @@ class WebPageBrowsing(unittest.TestCase):
                 side_menu_btns = docs_page.get_main_items_in_side_menu()
                 continue
             number_of_active_links = len(active_side_links)
-            print('num active links: ', number_of_active_links)
             for j in range(number_of_active_links):
-                print('index j:', j)
-                print(active_side_links[j].get_attribute('href'))
-                print('\t{}'.format(active_side_links[j].text))
+                # print(active_side_links[j].get_attribute('href'))
+                linkL2 = active_side_links[j].text
                 active_side_links[j].click()
                 self.driver.implicitly_wait(5)
                 cur_page = page.BasePage(self.driver)
                 assert cur_page.is_page_valid()
-                # iterate through the content links
-                # if active_side_links[j].text == 'SLATE CLI Manual':
-                #     continue
-                docs_page.iterate_links_doc_content()
+                
+                docs_page.iterate_links_doc_content(linkL1, linkL2)
                 # get the side links again
                 active_side_links = docs_page.get_links_in_active_side_item()
 
-            print('*'*40)
             side_menu_btns = docs_page.get_main_items_in_side_menu()
 
     
@@ -147,7 +136,7 @@ class WebPageBrowsing(unittest.TestCase):
             number_of_links = len(links)
             for i in range(number_of_links):
                 # print(links[i].get_attribute('href'))
-                # print(links[i].text)
+                print('Blog Page: {}'.format(links[i].text))
                 if links[i].text == 'Older' or links[i].text == 'Newer' or links[i].get_attribute('href')=='https://slateci.io/feed.xml':
                     continue
                 links[i].click()
@@ -178,6 +167,7 @@ class WebPageBrowsing(unittest.TestCase):
         for i in range(number_of_links):
             if 'mailto:' in links[i].get_attribute('href'):
                 continue
+            print('Community Page: {}'.format(links[i].text))
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver)
