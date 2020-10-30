@@ -47,6 +47,10 @@ class BasePage():
         comm_btn = self.driver.find_element(*BasePageLocators.COMM_TOP_BTN)
         comm_btn.click()
 
+    def getEditOnGitHubLink(self):
+        edit_on_github_link = self.driver.find_element_by_xpath("//a[@class='btn btn-slate btn-edit-on-github pull-right']")
+        return edit_on_github_link
+
 
 class HomePage(BasePage):
     def wait_for_page_loaded(self):

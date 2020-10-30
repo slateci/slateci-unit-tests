@@ -9,11 +9,11 @@ import time
 
 class WebPageBrowsing(unittest.TestCase):
     def setUp(self):
-        # path = '/Users/lizhang/Documents/webdriver/chromedriver'
+        path = '/Users/lizhang/Documents/webdriver/chromedriver'
         # path = '/home/runner/work/slateci-unit-tests/slateci-unit-tests/chromedriver'
-        path = '/home/runner/work/slateci.github.io/slateci.github.io/chromedriver'
+        # path = '/home/runner/work/slateci.github.io/slateci.github.io/chromedriver'
         options = ChromeOptions()
-        options.headless = True
+        options.headless = False
         self.driver = Chrome(executable_path=path, options=options)
 
         self.driver.get('https://slateci.io/')
@@ -37,6 +37,10 @@ class WebPageBrowsing(unittest.TestCase):
             self.driver.back()
             home_page.wait_for_page_loaded()
             links_in_try_slate = home_page.get_links_in_try_slate()
+        
+        # test Edit This Page on GitHub link
+        # edit_on_github_link = home_page.getEditOnGitHubLink()
+        # edit_on_github_link.click()
     
     def test_about_page(self):
         main_page = page.BasePage(self.driver)
