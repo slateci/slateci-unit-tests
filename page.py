@@ -127,12 +127,12 @@ class DocsPage(BasePage):
             self.driver.implicitly_wait(5)
             # here check 404/500
             # print('page title:', self.get_page_title())
-            assert self.is_page_valid()
+            self.assertTrue(self.is_page_valid())
 
             # in case a new tab is open, close tab and switch back to original tab
             if len(self.driver.window_handles) == 2:
                 self.driver.switch_to.window(window_name=self.driver.window_handles[-1])
-                assert self.is_page_valid()
+                self.assertTrue(self.is_page_valid())
                 self.driver.close()
                 self.driver.switch_to.window(window_name=self.driver.window_handles[0])
 

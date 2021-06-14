@@ -23,7 +23,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver)
         main_page.go_to_home_page()
         home_page = page.HomePage(self.driver)
-        assert home_page.is_page_valid()
+        self.assertTrue(home_page.is_page_valid())
 
         home_page.wait_for_page_loaded()
         links_in_try_slate = home_page.get_links_in_try_slate()
@@ -33,7 +33,7 @@ class WebPageBrowsing(unittest.TestCase):
             links_in_try_slate[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver)
-            assert cur_page.is_page_valid()
+            self.assertTrue(cur_page.is_page_valid())
             self.driver.back()
             home_page.wait_for_page_loaded()
             links_in_try_slate = home_page.get_links_in_try_slate()
@@ -46,7 +46,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver)
         main_page.go_to_about_page()
         about_page = page.AboutPage(self.driver)
-        assert about_page.is_page_valid()
+        self.assertTrue(about_page.is_page_valid())
 
         about_page.wait_for_page_loaded()
         links = about_page.get_all_links()
@@ -57,7 +57,7 @@ class WebPageBrowsing(unittest.TestCase):
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver)
-            assert cur_page.is_page_valid()
+            self.assertTrue(cur_page.is_page_valid())
 
             print(cur_page.get_page_title())
 
@@ -71,7 +71,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver)
         main_page.go_to_tech_page()
         tech_page = page.TechPage(self.driver)
-        assert tech_page.is_page_valid()
+        self.assertTrue(tech_page.is_page_valid())
 
         tech_page.wait_for_page_loaded()
         links = tech_page.get_all_links()
@@ -82,7 +82,7 @@ class WebPageBrowsing(unittest.TestCase):
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver)
-            assert cur_page.is_page_valid()
+            self.assertTrue(cur_page.is_page_valid())
             self.driver.back()
             # reload the page and get links
             tech_page.wait_for_page_loaded()
@@ -93,7 +93,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver)
         main_page.go_to_docs_page()
         docs_page = page.DocsPage(self.driver)
-        assert docs_page.is_page_valid()
+        self.assertTrue(docs_page.is_page_valid())
 
         docs_page.wait_for_page_loaded()
         side_menu_btns = docs_page.get_main_items_in_side_menu()
@@ -103,7 +103,7 @@ class WebPageBrowsing(unittest.TestCase):
             linkL1 = side_menu_btns[i].text
             side_menu_btns[i].click()
             self.driver.implicitly_wait(5)
-            assert docs_page.is_page_valid()
+            self.assertTrue(docs_page.is_page_valid())
             
             active_side_links = docs_page.get_links_in_active_side_item()
             if not active_side_links:
@@ -117,7 +117,7 @@ class WebPageBrowsing(unittest.TestCase):
                 active_side_links[j].click()
                 self.driver.implicitly_wait(5)
                 cur_page = page.BasePage(self.driver)
-                assert cur_page.is_page_valid()
+                self.assertTrue(cur_page.is_page_valid())
                 
                 docs_page.iterate_links_doc_content(linkL1, linkL2)
                 # get the side links again
@@ -131,7 +131,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver)
         main_page.go_to_blog_page()
         blog_page = page.BlogPage(self.driver)
-        assert blog_page.is_page_valid()
+        self.assertTrue(blog_page.is_page_valid())
 
         blog_page.wait_for_page_loaded()
         while True:
@@ -146,7 +146,7 @@ class WebPageBrowsing(unittest.TestCase):
                 links[i].click()
                 self.driver.implicitly_wait(5)
                 cur_page = page.BasePage(self.driver)
-                assert cur_page.is_page_valid()
+                self.assertTrue(cur_page.is_page_valid())
                 self.driver.back()
                 blog_page.wait_for_page_loaded()
                 links = blog_page.get_links_in_container_blog()
@@ -163,7 +163,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver)
         main_page.go_to_comm_page()
         comm_page = page.CommPage(self.driver)
-        assert comm_page.is_page_valid()
+        self.assertTrue(comm_page.is_page_valid())
 
         comm_page.wait_for_page_loaded()
         links = comm_page.get_links_in_container_community()
@@ -175,7 +175,7 @@ class WebPageBrowsing(unittest.TestCase):
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver)
-            assert cur_page.is_page_valid()
+            self.assertTrue(cur_page.is_page_valid())
             self.driver.back()
             comm_page.wait_for_page_loaded()
             links = comm_page.get_links_in_container_community()
