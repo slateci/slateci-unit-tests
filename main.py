@@ -9,15 +9,14 @@ import time
 
 class WebPageBrowsing(unittest.TestCase):
     def setUp(self):
-        # path = '/Users/lizhang/Documents/webdriver/chromedriver'
-        # path = '/home/runner/work/slateci-unit-tests/slateci-unit-tests/chromedriver'
-        path = '/home/runner/work/slateci.github.io/slateci.github.io/chromedriver'
         options = ChromeOptions()
-        options.headless = True
-        self.driver = Chrome(executable_path=path, options=options)
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--window-size=1920,1080')
+        self.driver = Chrome(options=options)
 
         self.driver.get('https://slateci.io/')
-        self.driver.set_window_size(1920, 1080)
     
     def test_home_page(self):
         main_page = page.BasePage(self.driver)
