@@ -35,16 +35,30 @@ Build the Docker image:
 docker build --file Dockerfile --tag seleniumpy:latest .
 ```
 
-Run the container and start `/bin/sh`:
+* The Python installation in the image may be used as a remote interpreter in IDEs such as [VSCode](https://devblogs.microsoft.com/python/remote-python-development-in-visual-studio-code/) and [IntelliJ](https://www.jetbrains.com/help/idea/configuring-remote-python-sdks.html).
+
+#### Testing on Production
+
+Run the test suite on the production website:
 
 ```shell
-docker run -it -v $PWD:/opt/project seleniumpy:latest /bin/sh
+[your@localmachine ~]$ docker run -it -v $PWD:/opt/project seleniumpy:latest python main.py
+https://dl.acm.org/citation.cfm?doid=3219104.3219144
+Building the SLATE Platform | Proceedings of the Practice and Experience on Advanced Research Computing
+https://doi.org/10.1145/3332186.3332234
+Managing Privilege and Access on Federated Edge Platforms | Proceedings of the Practice and Experience in Advanced Research Computing on Rise of the Machines (learning)
+https://doi.org/10.1145/3332186.3332236
+...
 ```
 
-Run the test suite:
+* Use the `$PWD:/opt/project` volume to mount files from the host to the container.
+
+#### Testing on Local Build
+
+Run the test suite on a local containerized build of the website:
 
 ```shell
-/opt/project # python main.py
+[your@localmachine ~]$ docker run -it -v $PWD:/opt/project seleniumpy:latest python main.py http://<host-fqdn>:4000
 https://dl.acm.org/citation.cfm?doid=3219104.3219144
 Building the SLATE Platform | Proceedings of the Practice and Experience on Advanced Research Computing
 https://doi.org/10.1145/3332186.3332234
@@ -54,7 +68,8 @@ https://doi.org/10.1145/3332186.3332236
 ```
 
 * Use the `$PWD:/opt/project` volume to mount files from your local machine to the container.
-* The Python installation in the container may be used as a remote interpreter in IDEs such as [VSCode](https://devblogs.microsoft.com/python/remote-python-development-in-visual-studio-code/) and [IntelliJ](https://www.jetbrains.com/help/idea/configuring-remote-python-sdks.html).
+* Configure the host firewall to allow traffic on port `4000`.
+* Refer to [slateci/slateci.github.io](https://github.com/slateci/slateci.github.io) for additional information on running the website locally.
 
 ### Local Machine
 

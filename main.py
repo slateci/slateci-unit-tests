@@ -4,10 +4,14 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import getopt
 import page
 import time
+import sys
 
 class WebPageBrowsing(unittest.TestCase):
+    URL = 'https://slateci.io/'
+
     def setUp(self):
         options = ChromeOptions()
         options.add_argument('--disable-dev-shm-usage')
@@ -16,7 +20,7 @@ class WebPageBrowsing(unittest.TestCase):
         options.add_argument('--window-size=1920,1080')
         self.driver = Chrome(options=options)
 
-        self.driver.get('https://slateci.io/')
+        self.driver.get(self.URL)
     
     def test_home_page(self):
         main_page = page.BasePage(self.driver)
@@ -185,4 +189,6 @@ class WebPageBrowsing(unittest.TestCase):
         self.driver.close()
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        WebPageBrowsing.URL = sys.argv.pop()
     unittest.main()
