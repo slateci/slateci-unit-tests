@@ -67,7 +67,7 @@ https://doi.org/10.1145/3332186.3332236
 ...
 ```
 
-* Use the `$PWD:/opt/project` volume to mount files from your local machine to the container.
+* Use the `$PWD:/opt/project` volume to mount files from the host to the container.
 * Configure the host firewall to allow traffic on port `4000`.
 * Refer to [slateci/slateci.github.io](https://github.com/slateci/slateci.github.io) for additional information on running the website locally.
 
