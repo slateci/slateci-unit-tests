@@ -9,8 +9,9 @@ from locator import *
 
 
 class BasePage:
-    def __init__(self, driver):
+    def __init__(self, driver, logger):
         self.driver = driver
+        self.logger = logger
 
     def get_page_title(self):
         return self.driver.title
@@ -126,7 +127,8 @@ class DocsPage(BasePage):
 
         for i in range(number_of_links):
             # print('url:', links[i].get_attribute('href'))
-            print("Docs Page: {} -> {} -> {}".format(linkL1, linkL2, links[i].text))
+            self.logger.info("Docs Page: {} -> {} -> {}".format(linkL1, linkL2, links[i].text))
+            # print("Docs Page: {} -> {} -> {}".format(linkL1, linkL2, links[i].text))
             if (
                 links[i].text
                 in [
