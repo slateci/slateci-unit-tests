@@ -1,10 +1,13 @@
 import unittest
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.common.action_chains import ActionChains
+import os
 import page
 import time
 import sys
 from logtools import CustomLogging
+from selenium.common.exceptions import ElementClickInterceptedException
 
 class WebPageBrowsing(unittest.TestCase):
     __logger = CustomLogging('banana').get_logger();
@@ -103,7 +106,25 @@ class WebPageBrowsing(unittest.TestCase):
         for i in range(number_of_btns):
             # self.__logger.info(side_menu_btns[i].get_attribute('href'))
             linkL1 = side_menu_btns[i].text
-            side_menu_btns[i].click()
+
+
+
+            # A giant hack to scroll the side-menu for non-visible elements.
+            try:
+                side_menu_btns[i].click()
+            except ElementClickInterceptedException:
+
+                if os.environ.get('SCREENSHOTS') == 1:
+                    self.driver.save_screenshot('/opt/project/screenshots/{}.png'.format(side_menu_btns[i].text))
+                self.__logger.info('Unable to click element: "{}". Trying a manual scroll of side-menu...'.format(side_menu_btns[i].text))
+                actions = ActionChains(self.driver)
+                actions.move_to_element(side_menu_btns[i])
+                actions.click()
+                actions.perform()
+
+
+
+
             self.driver.implicitly_wait(5)
             self.assertTrue(docs_page.is_page_valid())
             
