@@ -34,7 +34,7 @@ In the [slateci.io repo](https://github.com/slateci/slateci.github.io), the GitH
 Run the test suite on the production website:
 
 ```shell
-[your@localmachine ~]$ docker run -it -v $PWD:/opt/project hub.opensciencegrid.org/slate/python-chromedriver-selenium:3.9-alpine python main.py
+[your@localmachine ~]$ docker run -it -v $PWD:/opt/project hub.opensciencegrid.org/slate/python-chromedriver-selenium:3.9-debian python main.py
 https://dl.acm.org/citation.cfm?doid=3219104.3219144
 Building the SLATE Platform | Proceedings of the Practice and Experience on Advanced Research Computing
 https://doi.org/10.1145/3332186.3332234
@@ -51,7 +51,7 @@ https://doi.org/10.1145/3332186.3332236
 Run the test suite on a local containerized build of the website:
 
 ```shell
-[your@localmachine ~]$ docker run -it -v $PWD:/opt/project hub.opensciencegrid.org/slate/python-chromedriver-selenium:3.9-alpine python main.py http://<host-fqdn>:4000
+[your@localmachine ~]$ docker run -it -v $PWD:/opt/project hub.opensciencegrid.org/slate/python-chromedriver-selenium:3.9-debian python main.py http://<host-fqdn>:4000
 https://dl.acm.org/citation.cfm?doid=3219104.3219144
 Building the SLATE Platform | Proceedings of the Practice and Experience on Advanced Research Computing
 https://doi.org/10.1145/3332186.3332234
