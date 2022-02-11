@@ -29,20 +29,12 @@ In the [slateci.io repo](https://github.com/slateci/slateci.github.io), the GitH
 
 ### Docker
 
-Build the Docker image:
-
-```shell
-docker build --file Dockerfile --tag seleniumpy:latest .
-```
-
-* The Python installation in the image may be used as a remote interpreter in IDEs such as [VSCode](https://devblogs.microsoft.com/python/remote-python-development-in-visual-studio-code/) and [IntelliJ](https://www.jetbrains.com/help/idea/configuring-remote-python-sdks.html).
-
 #### Testing on Production
 
 Run the test suite on the production website:
 
 ```shell
-[your@localmachine ~]$ docker run -it -v $PWD:/opt/project seleniumpy:latest python main.py
+[your@localmachine ~]$ docker run -it -v $PWD:/opt/project hub.opensciencegrid.org/slate/python-chromedriver-selenium:3.9-alpine python main.py
 https://dl.acm.org/citation.cfm?doid=3219104.3219144
 Building the SLATE Platform | Proceedings of the Practice and Experience on Advanced Research Computing
 https://doi.org/10.1145/3332186.3332234
@@ -52,13 +44,14 @@ https://doi.org/10.1145/3332186.3332236
 ```
 
 * Use the `$PWD:/opt/project` volume to mount files from the host to the container.
+* The Python installation in the image may be used as a remote interpreter in IDEs such as [VSCode](https://devblogs.microsoft.com/python/remote-python-development-in-visual-studio-code/) and [IntelliJ](https://www.jetbrains.com/help/idea/configuring-remote-python-sdks.html).
 
 #### Testing on Local Build
 
 Run the test suite on a local containerized build of the website:
 
 ```shell
-[your@localmachine ~]$ docker run -it -v $PWD:/opt/project seleniumpy:latest python main.py http://<host-fqdn>:4000
+[your@localmachine ~]$ docker run -it -v $PWD:/opt/project hub.opensciencegrid.org/slate/python-chromedriver-selenium:3.9-alpine python main.py http://<host-fqdn>:4000
 https://dl.acm.org/citation.cfm?doid=3219104.3219144
 Building the SLATE Platform | Proceedings of the Practice and Experience on Advanced Research Computing
 https://doi.org/10.1145/3332186.3332234
