@@ -14,7 +14,3 @@ rebates/logs/
 
 # downloaded pdfs during test
 *.pdf
-
-# IDE Metadata
-.idea/
-.vscode/
