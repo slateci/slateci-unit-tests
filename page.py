@@ -1,3 +1,5 @@
+from re import search
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -141,23 +143,27 @@ class DocsPage(BasePage):
                 # 'for Linux', 'for Mac OS' to prevent download
                 # 'A Docker-in-Docker Kubernetes node' 404, link to fix still unknown
                 continue
-            links[i].click()
-            self.driver.implicitly_wait(5)
-            # here check 404/500
-            # print('page title:', self.get_page_title())
-            assert self.is_page_valid()
 
-            # in case a new tab is open, close tab and switch back to original tab
-            if len(self.driver.window_handles) == 2:
-                self.driver.switch_to.window(window_name=self.driver.window_handles[-1])
+            if search('^.*\.pdf$', links[i].get_attribute("href")):
+                self.logger.info('PDF download detected: {}'.format(links[i].get_attribute("href")))
+            else:
+                links[i].click()
+                self.driver.implicitly_wait(5)
+                # here check 404/500
+                # print('page title:', self.get_page_title())
                 assert self.is_page_valid()
-                self.driver.close()
-                self.driver.switch_to.window(window_name=self.driver.window_handles[0])
 
-            self.driver.back()
-            self.wait_for_page_loaded()
-            links = self.get_links_in_doc_content()
-            # print('length is:', len(links))
+                # in case a new tab is open, close tab and switch back to original tab
+                if len(self.driver.window_handles) == 2:
+                    self.driver.switch_to.window(window_name=self.driver.window_handles[-1])
+                    assert self.is_page_valid()
+                    self.driver.close()
+                    self.driver.switch_to.window(window_name=self.driver.window_handles[0])
+
+                self.driver.back()
+                self.wait_for_page_loaded()
+                links = self.get_links_in_doc_content()
+                # print('length is:', len(links))
 
     def get_main_items_in_side_menu(self):
         items = self.driver.find_elements_by_xpath(

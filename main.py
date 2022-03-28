@@ -20,6 +20,16 @@ class WebPageBrowsing(unittest.TestCase):
         options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--window-size=1920,1080')
+
+        #- The following should allow PDFs to be viewed instead of downloaded but does not...
+        # options.add_experimental_option("prefs",
+        #                                 {
+        #                                     "plugins.always_open_pdf_externally": False,
+        #                                     "plugins.plugins_list": [{
+        #                                         "enabled": True, "name": "Chrome PDF Viewer"
+        #                                     }]
+        #                                 })
+
         self.driver = Chrome(options=options)
 
         self.driver.get(self.URL)
