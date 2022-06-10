@@ -33,12 +33,12 @@ class WebPageBrowsing(unittest.TestCase):
         self.driver = Chrome(options=options)
 
         self.driver.get(self.URL)
-    
+
     def test_home_page(self):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_home_page()
         home_page = page.HomePage(self.driver, self.__logger)
-        self.assertTrue(home_page.is_page_valid())
+        self.assertTrue(home_page.is_page_valid(), f"{home_page.get_page_title()} is not valid.")
 
         home_page.wait_for_page_loaded()
         links_in_try_slate = home_page.get_links_in_try_slate()
@@ -48,20 +48,20 @@ class WebPageBrowsing(unittest.TestCase):
             links_in_try_slate[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
-            self.assertTrue(cur_page.is_page_valid())
+            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
             self.driver.back()
             home_page.wait_for_page_loaded()
             links_in_try_slate = home_page.get_links_in_try_slate()
-        
+
         # test Edit This Page on GitHub link
         # edit_on_github_link = home_page.getEditOnGitHubLink()
         # edit_on_github_link.click()
-    
+
     def test_about_page(self):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_about_page()
         about_page = page.AboutPage(self.driver, self.__logger)
-        self.assertTrue(about_page.is_page_valid())
+        self.assertTrue(about_page.is_page_valid(), f"{about_page.get_page_title()} is not valid.")
 
         about_page.wait_for_page_loaded()
         links = about_page.get_all_links()
@@ -72,7 +72,7 @@ class WebPageBrowsing(unittest.TestCase):
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
-            self.assertTrue(cur_page.is_page_valid())
+            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
 
             self.__logger.info(cur_page.get_page_title())
 
@@ -81,12 +81,12 @@ class WebPageBrowsing(unittest.TestCase):
             self.driver.back()
             about_page.wait_for_page_loaded()
             links = about_page.get_all_links()
-    
+
     def test_tech_page(self):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_tech_page()
         tech_page = page.TechPage(self.driver, self.__logger)
-        self.assertTrue(tech_page.is_page_valid())
+        self.assertTrue(tech_page.is_page_valid(), f"{tech_page.get_page_title()} is not valid.")
 
         tech_page.wait_for_page_loaded()
         links = tech_page.get_all_links()
@@ -97,18 +97,17 @@ class WebPageBrowsing(unittest.TestCase):
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
-            self.assertTrue(cur_page.is_page_valid())
+            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
             self.driver.back()
             # reload the page and get links
             tech_page.wait_for_page_loaded()
             links = tech_page.get_all_links()
 
-    
     def test_docs_page(self):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_docs_page()
         docs_page = page.DocsPage(self.driver, self.__logger)
-        self.assertTrue(docs_page.is_page_valid())
+        self.assertTrue(docs_page.is_page_valid(), f"{docs_page.get_page_title()} is not valid.")
 
         docs_page.wait_for_page_loaded()
         side_menu_btns = docs_page.get_main_items_in_side_menu()
@@ -126,18 +125,16 @@ class WebPageBrowsing(unittest.TestCase):
 
                 if os.environ.get('SCREENSHOTS') == 1:
                     self.driver.save_screenshot('/opt/project/screenshots/{}.png'.format(side_menu_btns[i].text))
-                self.__logger.info('Unable to click element: "{}". Trying a manual scroll of side-menu...'.format(side_menu_btns[i].text))
+                self.__logger.info('Unable to click element: "{}". Trying a manual scroll of side-menu...'.format(
+                    side_menu_btns[i].text))
                 actions = ActionChains(self.driver)
                 actions.move_to_element(side_menu_btns[i])
                 actions.click()
                 actions.perform()
 
-
-
-
             self.driver.implicitly_wait(5)
-            self.assertTrue(docs_page.is_page_valid())
-            
+            self.assertTrue(docs_page.is_page_valid(), f"{docs_page.get_page_title()} is not valid.")
+
             active_side_links = docs_page.get_links_in_active_side_item()
             if not active_side_links:
                 docs_page.iterate_links_doc_content()
@@ -150,21 +147,19 @@ class WebPageBrowsing(unittest.TestCase):
                 active_side_links[j].click()
                 self.driver.implicitly_wait(5)
                 cur_page = page.BasePage(self.driver, self.__logger)
-                self.assertTrue(cur_page.is_page_valid())
-                
+                self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
+
                 docs_page.iterate_links_doc_content(linkL1, linkL2)
                 # get the side links again
                 active_side_links = docs_page.get_links_in_active_side_item()
 
             side_menu_btns = docs_page.get_main_items_in_side_menu()
 
-    
-
     def test_blog_page(self):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_blog_page()
         blog_page = page.BlogPage(self.driver, self.__logger)
-        self.assertTrue(blog_page.is_page_valid())
+        self.assertTrue(blog_page.is_page_valid(), f"{blog_page.get_page_title()} is not valid.")
 
         blog_page.wait_for_page_loaded()
         while True:
@@ -174,12 +169,13 @@ class WebPageBrowsing(unittest.TestCase):
             for i in range(number_of_links):
                 # self.__logger.info(links[i].get_attribute('href'))
                 self.__logger.info('Blog Page: {}'.format(links[i].text))
-                if links[i].text == 'Older' or links[i].text == 'Newer' or links[i].get_attribute('href')=='https://slateci.io/feed.xml':
+                if links[i].text == 'Older' or links[i].text == 'Newer' or links[i].get_attribute(
+                        'href') == 'https://slateci.io/feed.xml':
                     continue
                 links[i].click()
                 self.driver.implicitly_wait(5)
                 cur_page = page.BasePage(self.driver, self.__logger)
-                self.assertTrue(cur_page.is_page_valid())
+                self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
                 self.driver.back()
                 blog_page.wait_for_page_loaded()
                 links = blog_page.get_links_in_container_blog()
@@ -191,12 +187,11 @@ class WebPageBrowsing(unittest.TestCase):
             older_btn.click()
             blog_page.wait_for_page_loaded()
 
-    
     def test_comm_page(self):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_comm_page()
         comm_page = page.CommPage(self.driver, self.__logger)
-        self.assertTrue(comm_page.is_page_valid())
+        self.assertTrue(comm_page.is_page_valid(), f"{comm_page.get_page_title()} is not valid.")
 
         comm_page.wait_for_page_loaded()
         links = comm_page.get_links_in_container_community()
@@ -208,15 +203,15 @@ class WebPageBrowsing(unittest.TestCase):
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
-            self.assertTrue(cur_page.is_page_valid())
+            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
             self.driver.back()
             comm_page.wait_for_page_loaded()
             links = comm_page.get_links_in_container_community()
 
-
     def tearDown(self):
         time.sleep(2)
         self.driver.close()
+
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
