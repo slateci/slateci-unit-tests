@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  slate_site_selenium:
+    container_name: slate_site_selenium
+    image: hub.opensciencegrid.org/slate/python-chromedriver-selenium:3.9-alpine
+    command: "python -u main.py $URL_UNDER_TEST"
+#    environment:
+#      URL_UNDER_TEST: ${SLATE_SITE_URL}
+    volumes:
+      - ./:/opt/project
