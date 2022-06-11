@@ -9,10 +9,12 @@ import sys
 from logtools import CustomLogging
 from selenium.common.exceptions import ElementClickInterceptedException
 
+
 class WebPageBrowsing(unittest.TestCase):
     __logger = CustomLogging('banana').get_logger();
-    
+
     URL = 'https://slateci.io/'
+    __logger.info(f"URL under test: {URL}")
 
     def setUp(self):
         options = ChromeOptions()

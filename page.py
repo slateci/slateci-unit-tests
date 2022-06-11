@@ -147,16 +147,22 @@ class DocsPage(BasePage):
             if search('^.*\.pdf$', links[i].get_attribute("href")):
                 self.logger.info('PDF download detected: {}'.format(links[i].get_attribute("href")))
             else:
+                self.logger.info(f'Clicking "{links[i].text}"')
                 links[i].click()
                 self.driver.implicitly_wait(5)
                 # here check 404/500
-                # print('page title:', self.get_page_title())
-                assert self.is_page_valid()
+                self.logger.info(f"Link destination page title: {self.get_page_title()}")
+                if not self.is_page_valid():
+                    self.logger.error(f'"{self.get_page_title()}" is not valid.')
+                    raise AssertionError("See the logs")
 
                 # in case a new tab is open, close tab and switch back to original tab
                 if len(self.driver.window_handles) == 2:
                     self.driver.switch_to.window(window_name=self.driver.window_handles[-1])
-                    assert self.is_page_valid()
+                    self.logger.info(f"Link destination page title: {self.get_page_title()}")
+                    if not self.is_page_valid():
+                        self.logger.error(f'"{self.get_page_title()}" is not valid.')
+                        raise AssertionError("See the logs")
                     self.driver.close()
                     self.driver.switch_to.window(window_name=self.driver.window_handles[0])
 
