@@ -1,0 +1,7 @@
+name: slate-selenium
+channels:
+  - defaults
+dependencies:
+  - pip=22.1.2
+  - python=3.10.4
+  - selenium=3.141.0
