@@ -69,7 +69,7 @@ class HomePage(BasePage):
     def get_links_in_try_slate(self):
         expr = "//div[@class='row d-flex justify-content-between px-5']"
         field1 = self.driver.find_element(by=By.XPATH, value=expr)
-        links = field1.find_element(by=By.TAG_NAME, value="a")
+        links = field1.find_elements(by=By.TAG_NAME, value="a")
         return links
 
 
@@ -89,7 +89,7 @@ class AboutPage(BasePage):
     def get_all_links(self):
         expr = "//div[@id='top-of-page']/div[2]"
         field1 = self.driver.find_element(by=By.XPATH, value=expr)
-        links = field1.find_element(by=By.TAG_NAME, value="a")
+        links = field1.find_elements(by=By.TAG_NAME, value="a")
         return links
 
 
@@ -102,12 +102,12 @@ class TechPage(BasePage):
     def get_all_links(self):
         expr = "//div[@id='top-of-page']/div[2]"
         field1 = self.driver.find_element(by=By.XPATH, value=expr)
-        links = field1.find_element(by=By.TAG_NAME, value="a")
+        links = field1.find_elements(by=By.TAG_NAME, value="a")
 
         # add the edit this page on github link to all links
         expr2 = "//div[@id='top-of-page']/div[3]"
         git_edit_field = self.driver.find_element(by=By.XPATH, value=expr2)
-        links.append(git_edit_field.find_element_by_tag_name("a"))
+        links.append(git_edit_field.find_element(by=By.TAG_NAME, value="a"))
         return links
 
 
@@ -119,7 +119,7 @@ class DocsPage(BasePage):
 
     def get_links_in_doc_content(self):
         doc_content = self.driver.find_element_by_id("doc-content")
-        links = doc_content.find_element(by=By.TAG_NAME, value="a")
+        links = doc_content.find_elements(by=By.TAG_NAME, value="a")
         return links
 
     def iterate_links_doc_content(self, linkL1, linkL2):
@@ -172,14 +172,14 @@ class DocsPage(BasePage):
 
     def get_main_items_in_side_menu(self):
         expr = "//li[@class='parent-li']/a[@role='button']"
-        items = self.driver.find_element(by=By.XPATH, value=expr)
+        items = self.driver.find_elements(by=By.XPATH, value=expr)
         return items
 
     def get_links_in_active_side_item(self):
         try:
             expr = "//div[@class='collapse collapsable-parent show active-menu-link']"
             active_item = self.driver.find_element(by=By.XPATH, value=expr)
-            links = active_item.find_element(by=By.TAG_NAME, value="a")
+            links = active_item.find_elements(by=By.TAG_NAME, value="a")
             return links
         except:
             None
@@ -194,7 +194,7 @@ class BlogPage(BasePage):
     def get_links_in_container_blog(self):
         expr = "//div[@class='container blog']"
         field = self.driver.find_element(by=By.XPATH, value=expr)
-        links = field.find_element(by=By.TAG_NAME, value="a")
+        links = field.find_elements(by=By.TAG_NAME, value="a")
         return links
 
     def get_older_btn(self):
@@ -215,5 +215,5 @@ class CommPage(BasePage):
     def get_links_in_container_community(self):
         expr = "//div[@class='container community']"
         field = self.driver.find_element(by=By.XPATH, value=expr)
-        links = field.find_element(by=By.TAG_NAME, value="a")
+        links = field.find_elements(by=By.TAG_NAME, value="a")
         return links
