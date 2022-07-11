@@ -118,7 +118,7 @@ class DocsPage(BasePage):
         )
 
     def get_links_in_doc_content(self):
-        doc_content = self.driver.find_element_by_id("doc-content")
+        doc_content = self.driver.find_element(by=By.ID, value="doc-content")
         links = doc_content.find_elements(by=By.TAG_NAME, value="a")
         return links
 
