@@ -207,7 +207,9 @@ class WebPageBrowsing(unittest.TestCase):
             cur_page = page.BasePage(self.driver, self.__logger)
             self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
             self.driver.back()
+            self.__logger.debug('Clicked browser [ Back ] button.')
             comm_page.wait_for_page_loaded()
+            self.__logger.debug('Re-determining links on page.')
             links = comm_page.get_links_in_container_community()
 
     def tearDown(self):
