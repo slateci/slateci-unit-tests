@@ -208,7 +208,7 @@ class BlogPage(BasePage):
 
 class CommPage(BasePage):
     def wait_for_page_loaded(self):
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.ID, "our-community"))
         )
 
