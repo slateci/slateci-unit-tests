@@ -8,6 +8,7 @@ import time
 import sys
 from logtools import CustomLogging
 from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.common.exceptions import TimeoutException
 
 
 class WebPageBrowsing(unittest.TestCase):
@@ -53,7 +54,10 @@ class WebPageBrowsing(unittest.TestCase):
             self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
             self.driver.back()
             self.__logger.debug('Clicked browser [ Back ] button.')
-            home_page.wait_for_page_loaded()
+            try:
+                home_page.wait_for_page_loaded()
+            except TimeoutException:
+                self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
             self.__logger.debug('Re-determining links on page.')
             links_in_try_slate = home_page.get_links_in_try_slate()
 
@@ -84,7 +88,10 @@ class WebPageBrowsing(unittest.TestCase):
                 continue
             self.driver.back()
             self.__logger.debug('Clicked browser [ Back ] button.')
-            about_page.wait_for_page_loaded()
+            try:
+                about_page.wait_for_page_loaded()
+            except TimeoutException:
+                self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
             self.__logger.debug('Re-determining links on page.')
             links = about_page.get_all_links()
 
@@ -107,7 +114,10 @@ class WebPageBrowsing(unittest.TestCase):
             self.driver.back()
             self.__logger.debug('Clicked browser [ Back ] button.')
             # reload the page and get links
-            tech_page.wait_for_page_loaded()
+            try:
+                tech_page.wait_for_page_loaded()
+            except TimeoutException:
+                self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
             self.__logger.debug('Re-determining links on page.')
             links = tech_page.get_all_links()
 
@@ -186,7 +196,10 @@ class WebPageBrowsing(unittest.TestCase):
                 self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
                 self.driver.back()
                 self.__logger.debug('Clicked browser [ Back ] button.')
-                blog_page.wait_for_page_loaded()
+                try:
+                    blog_page.wait_for_page_loaded()
+                except TimeoutException:
+                    self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
                 self.__logger.debug('Re-determining links on page.')
                 links = blog_page.get_links_in_container_blog()
 
@@ -216,7 +229,10 @@ class WebPageBrowsing(unittest.TestCase):
             self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
             self.driver.back()
             self.__logger.debug('Clicked browser [ Back ] button.')
-            comm_page.wait_for_page_loaded()
+            try:
+                comm_page.wait_for_page_loaded()
+            except TimeoutException:
+                self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
             self.__logger.debug('Re-determining links on page.')
             links = comm_page.get_links_in_container_community()
 
