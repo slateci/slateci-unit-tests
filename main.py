@@ -26,12 +26,12 @@ class WebPageBrowsing(unittest.TestCase):
 
         #- The following should allow PDFs to be viewed instead of downloaded but does not...
         # options.add_experimental_option("prefs",
-        #                                 {
-        #                                     "plugins.always_open_pdf_externally": False,
-        #                                     "plugins.plugins_list": [{
-        #                                         "enabled": True, "name": "Chrome PDF Viewer"
-        #                                     }]
-        #                                 })
+        #       {
+        #           "plugins.always_open_pdf_externally": False,
+        #           "plugins.plugins_list": [{
+        #               "enabled": True, "name": "Chrome PDF Viewer"
+        #           }]
+        #       })
 
         self.driver = Chrome(options=options)
 
