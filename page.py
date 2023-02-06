@@ -1,5 +1,6 @@
 from re import search
 
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -187,9 +188,12 @@ class DocsPage(BasePage):
 
 class BlogPage(BasePage):
     def wait_for_page_loaded(self):
-        WebDriverWait(self.driver, 30).until(
-            EC.presence_of_element_located((By.XPATH, "//div[@class='container blog']"))
-        )
+        try:
+            WebDriverWait(self.driver, 30).until(
+                EC.presence_of_element_located((By.XPATH, "//div[@class='container blog']"))
+            )
+        except NoSuchElementException:
+            self.logger.error(f"Unable to find wait element on page: {self.driver.title}")
 
     def get_links_in_container_blog(self):
         expr = "//div[@class='container blog']"
