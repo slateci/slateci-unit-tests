@@ -47,7 +47,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_home_page()
         home_page = page.HomePage(self.driver, self.__logger)
-        self.assertTrue(home_page.is_page_valid(), f"{home_page.get_page_title()} is not valid.")
+        self.assertTrue(home_page.is_page_valid(), f"{home_page.get_page_title()} is not valid.  -- original")
 
         home_page.wait_for_page_loaded()
         links_in_try_slate = home_page.get_links_in_try_slate()
@@ -57,13 +57,13 @@ class WebPageBrowsing(unittest.TestCase):
             links_in_try_slate[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
-            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
+            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.  -- clickthrough")
             self.driver.back()
             self.__logger.debug('Clicked browser [ Back ] button.')
             try:
                 home_page.wait_for_page_loaded()
             except TimeoutException:
-                self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
+                self.__logger.error(f"{cur_page.get_page_title()} is not valid.  -- return")
             self.__logger.debug('Re-determining links on page.')
             links_in_try_slate = home_page.get_links_in_try_slate()
 
@@ -75,7 +75,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_about_page()
         about_page = page.AboutPage(self.driver, self.__logger)
-        self.assertTrue(about_page.is_page_valid(), f"{about_page.get_page_title()} is not valid.")
+        self.assertTrue(about_page.is_page_valid(), f"{about_page.get_page_title()} is not valid.  -- original")
 
         about_page.wait_for_page_loaded()
         links = about_page.get_all_links()
@@ -86,7 +86,7 @@ class WebPageBrowsing(unittest.TestCase):
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
-            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
+            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.  -- clickthrough")
 
             self.__logger.info(cur_page.get_page_title())
 
@@ -97,7 +97,7 @@ class WebPageBrowsing(unittest.TestCase):
             try:
                 about_page.wait_for_page_loaded()
             except TimeoutException:
-                self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
+                self.__logger.error(f"{cur_page.get_page_title()} is not valid.  -- return")
             self.__logger.debug('Re-determining links on page.')
             links = about_page.get_all_links()
 
@@ -105,7 +105,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_tech_page()
         tech_page = page.TechPage(self.driver, self.__logger)
-        self.assertTrue(tech_page.is_page_valid(), f"{tech_page.get_page_title()} is not valid.")
+        self.assertTrue(tech_page.is_page_valid(), f"{tech_page.get_page_title()} is not valid.  -- original")
 
         tech_page.wait_for_page_loaded()
         links = tech_page.get_all_links()
@@ -116,14 +116,14 @@ class WebPageBrowsing(unittest.TestCase):
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
-            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
+            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.  -- clickthrough")
             self.driver.back()
             self.__logger.debug('Clicked browser [ Back ] button.')
             # reload the page and get links
             try:
                 tech_page.wait_for_page_loaded()
             except TimeoutException:
-                self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
+                self.__logger.error(f"{cur_page.get_page_title()} is not valid.  -- return")
             self.__logger.debug('Re-determining links on page.')
             links = tech_page.get_all_links()
 
@@ -131,7 +131,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_docs_page()
         docs_page = page.DocsPage(self.driver, self.__logger)
-        self.assertTrue(docs_page.is_page_valid(), f"{docs_page.get_page_title()} is not valid.")
+        self.assertTrue(docs_page.is_page_valid(), f"{docs_page.get_page_title()} is not valid.  -- original")
 
         docs_page.wait_for_page_loaded()
         side_menu_btns = docs_page.get_main_items_in_side_menu()
@@ -157,7 +157,7 @@ class WebPageBrowsing(unittest.TestCase):
                 actions.perform()
 
             self.driver.implicitly_wait(5)
-            self.assertTrue(docs_page.is_page_valid(), f"{docs_page.get_page_title()} is not valid.")
+            self.assertTrue(docs_page.is_page_valid(), f"{docs_page.get_page_title()} is not valid.  -- original")
 
             active_side_links = docs_page.get_links_in_active_side_item()
             if not active_side_links:
@@ -171,7 +171,7 @@ class WebPageBrowsing(unittest.TestCase):
                 active_side_links[j].click()
                 self.driver.implicitly_wait(5)
                 cur_page = page.BasePage(self.driver, self.__logger)
-                self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
+                self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid. -- clickthrough")
 
                 docs_page.iterate_links_doc_content(linkL1, linkL2)
                 # get the side links again
@@ -183,7 +183,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_blog_page()
         blog_page = page.BlogPage(self.driver, self.__logger)
-        self.assertTrue(blog_page.is_page_valid(), f"{blog_page.get_page_title()} is not valid.")
+        self.assertTrue(blog_page.is_page_valid(), f"{blog_page.get_page_title()} is not valid.  -- original")
 
         blog_page.wait_for_page_loaded()
         while True:
@@ -199,13 +199,13 @@ class WebPageBrowsing(unittest.TestCase):
                 links[i].click()
                 self.driver.implicitly_wait(5)
                 cur_page = page.BasePage(self.driver, self.__logger)
-                self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
+                self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid. -- clickthrough")
                 self.driver.back()
                 self.__logger.debug('Clicked browser [ Back ] button.')
                 try:
                     blog_page.wait_for_page_loaded()
                 except TimeoutException:
-                    self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
+                    self.__logger.error(f"{cur_page.get_page_title()} is not valid. -- return")
                 self.__logger.debug('Re-determining links on page.')
                 links = blog_page.get_links_in_container_blog()
 
@@ -220,7 +220,7 @@ class WebPageBrowsing(unittest.TestCase):
         main_page = page.BasePage(self.driver, self.__logger)
         main_page.go_to_comm_page()
         comm_page = page.CommPage(self.driver, self.__logger)
-        self.assertTrue(comm_page.is_page_valid(), f"{comm_page.get_page_title()} is not valid.")
+        self.assertTrue(comm_page.is_page_valid(), f"{comm_page.get_page_title()} is not valid.  -- original")
 
         comm_page.wait_for_page_loaded()
         links = comm_page.get_links_in_container_community()
@@ -232,13 +232,13 @@ class WebPageBrowsing(unittest.TestCase):
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
-            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
+            self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid. -- clickthrough")
             self.driver.back()
             self.__logger.debug('Clicked browser [ Back ] button.')
             try:
                 comm_page.wait_for_page_loaded()
             except TimeoutException:
-                self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
+                self.__logger.error(f"{cur_page.get_page_title()} is not valid. -- return")
             self.__logger.debug('Re-determining links on page.')
             links = comm_page.get_links_in_container_community()
 
