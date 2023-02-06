@@ -36,12 +36,9 @@ In the [slateci.io repo](https://github.com/slateci/slateci.github.io), the GitH
 Run the test suite on the production website:
 
 ```shell
-[your@localmachine ~]$ docker run -it -v $PWD:/opt/project hub.opensciencegrid.org/slate/python-chromedriver-selenium:3.9-alpine python main.py
-https://dl.acm.org/citation.cfm?doid=3219104.3219144
-Building the SLATE Platform | Proceedings of the Practice and Experience on Advanced Research Computing
-https://doi.org/10.1145/3332186.3332234
-Managing Privilege and Access on Federated Edge Platforms | Proceedings of the Practice and Experience in Advanced Research Computing on Rise of the Machines (learning)
-https://doi.org/10.1145/3332186.3332236
+[your@localmachine ~]$ run -it -v $PWD:/opt/project joyzoursky/python-chromedriver:3.9-selenium python /opt/project/main.py
+INFO     URL under test: https://slateci.io/
+...
 ...
 ```
 
@@ -53,12 +50,9 @@ https://doi.org/10.1145/3332186.3332236
 Run the test suite on a local containerized build of the website:
 
 ```shell
-[your@localmachine ~]$ docker run -it -v $PWD:/opt/project --network="host" hub.opensciencegrid.org/slate/python-chromedriver-selenium:3.9-alpine python main.py http://localhost:4000
-https://dl.acm.org/citation.cfm?doid=3219104.3219144
-Building the SLATE Platform | Proceedings of the Practice and Experience on Advanced Research Computing
-https://doi.org/10.1145/3332186.3332234
-Managing Privilege and Access on Federated Edge Platforms | Proceedings of the Practice and Experience in Advanced Research Computing on Rise of the Machines (learning)
-https://doi.org/10.1145/3332186.3332236
+[your@localmachine ~]$ docker run -it -v $PWD:/opt/project --network="host" joyzoursky/python-chromedriver:3.9-selenium python /opt/project/main.py http://localhost:4000
+INFO     URL under test: http://localhost:4000
+...
 ...
 ```
 
