@@ -52,7 +52,9 @@ class WebPageBrowsing(unittest.TestCase):
             cur_page = page.BasePage(self.driver, self.__logger)
             self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
             self.driver.back()
+            self.__logger.debug('Clicked browser [ Back ] button.')
             home_page.wait_for_page_loaded()
+            self.__logger.debug('Re-determining links on page.')
             links_in_try_slate = home_page.get_links_in_try_slate()
 
         # test Edit This Page on GitHub link
@@ -81,7 +83,9 @@ class WebPageBrowsing(unittest.TestCase):
             if cur_page.get_page_title() == 'SLATE / About':
                 continue
             self.driver.back()
+            self.__logger.debug('Clicked browser [ Back ] button.')
             about_page.wait_for_page_loaded()
+            self.__logger.debug('Re-determining links on page.')
             links = about_page.get_all_links()
 
     def test_tech_page(self):
@@ -101,8 +105,10 @@ class WebPageBrowsing(unittest.TestCase):
             cur_page = page.BasePage(self.driver, self.__logger)
             self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
             self.driver.back()
+            self.__logger.debug('Clicked browser [ Back ] button.')
             # reload the page and get links
             tech_page.wait_for_page_loaded()
+            self.__logger.debug('Re-determining links on page.')
             links = tech_page.get_all_links()
 
     def test_docs_page(self):
@@ -179,7 +185,9 @@ class WebPageBrowsing(unittest.TestCase):
                 cur_page = page.BasePage(self.driver, self.__logger)
                 self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.")
                 self.driver.back()
+                self.__logger.debug('Clicked browser [ Back ] button.')
                 blog_page.wait_for_page_loaded()
+                self.__logger.debug('Re-determining links on page.')
                 links = blog_page.get_links_in_container_blog()
 
             # click Order button
