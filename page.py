@@ -38,7 +38,9 @@ class BasePage:
     def is_page_valid(self):
         logs = self.driver.get_log('performance')
         url = self.driver.current_url
-        return self.get_status_code(logs, url) == 200
+        status_code = self.get_status_code(logs, url)
+        self.logger.debug(f"Page response code: {status_code}")
+        return status_code == 200
 
     def click_back_btn(self):
         self.driver.back()
