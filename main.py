@@ -200,6 +200,7 @@ class WebPageBrowsing(unittest.TestCase):
                     blog_page.wait_for_page_loaded()
                 except TimeoutException:
                     self.__logger.error(f"{cur_page.get_page_title()} is not valid.")
+                self.__logger.debug(f"Page title is: {self.driver.title()}")
                 self.__logger.debug('Re-determining links on page.')
                 links = blog_page.get_links_in_container_blog()
 
