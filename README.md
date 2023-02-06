@@ -36,7 +36,7 @@ In the [slateci.io repo](https://github.com/slateci/slateci.github.io), the GitH
 Run the test suite on the production website:
 
 ```shell
-[your@localmachine ~]$ run -it -v $PWD:/opt/project joyzoursky/python-chromedriver:3.9-selenium python /opt/project/main.py
+[your@localmachine ~]$ docker run -it -v $PWD:/opt/project joyzoursky/python-chromedriver:3.9-selenium python /opt/project/main.py
 INFO     URL under test: https://slateci.io/
 ...
 ...
