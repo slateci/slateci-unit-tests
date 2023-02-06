@@ -60,7 +60,7 @@ class BasePage:
 
 class HomePage(BasePage):
     def wait_for_page_loaded(self):
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located(
                 (By.XPATH, "//div[@class='row d-flex justify-content-between px-5']")
             )
@@ -77,7 +77,7 @@ class AboutPage(BasePage):
     # def test_enter_page(self):
     #     print('enter about page')
     def wait_for_page_loaded(self):
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located(
                 (By.XPATH, "//h2[@id='journal-and-conference-papers']")
             )
@@ -95,7 +95,7 @@ class AboutPage(BasePage):
 
 class TechPage(BasePage):
     def wait_for_page_loaded(self):
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.ID, "slate-technology"))
         )
 
@@ -113,7 +113,7 @@ class TechPage(BasePage):
 
 class DocsPage(BasePage):
     def wait_for_page_loaded(self):
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.ID, "content-container"))
         )
 
@@ -187,7 +187,7 @@ class DocsPage(BasePage):
 
 class BlogPage(BasePage):
     def wait_for_page_loaded(self):
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.XPATH, "//div[@class='container blog']"))
         )
 
