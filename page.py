@@ -40,6 +40,7 @@ class BasePage:
         url = self.driver.current_url
         status_code = self.get_status_code(logs, url)
         self.logger.debug(f"Page response code: {status_code}")
+        self.logger.debug(f"Page is valid: {status_code != 404}")
         return status_code != 404
 
     def click_back_btn(self):
