@@ -1,6 +1,7 @@
 import unittest
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.action_chains import ActionChains
 import os
 import page
@@ -33,7 +34,12 @@ class WebPageBrowsing(unittest.TestCase):
         #           }]
         #       })
 
-        self.driver = Chrome(options=options)
+        capabilities = DesiredCapabilities.CHROME
+        capabilities['goog:loggingPrefs'] = {'performance': 'ALL'}
+
+        self.driver = Chrome(
+            desired_capabilities=capabilities,
+            options=options)
 
         self.driver.get(self.URL)
 

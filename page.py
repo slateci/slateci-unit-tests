@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select, WebDriverWait
 
 from locator import *
+import json
 
 # from element import BasePageElement
 
@@ -22,9 +23,22 @@ class BasePage:
     def get_page_source(self):
         return self.driver.page_source
 
+    def get_status_code(self, logs, url):
+        for entry in logs:
+            for k, v in entry.items():
+                if k == 'message' and 'status' in v:
+                    msg = json.loads(v)['message']['params']
+                    for mk, mv in msg.items():
+                        if mk == 'response':
+                            response_url = mv['url']
+                            response_status = mv['status']
+                            if response_url == url:
+                                return response_status
+
     def is_page_valid(self):
-        pg_source = self.driver.page_source
-        return "404" not in pg_source or "Page not found" not in pg_source
+        logs = self.driver.get_log('performance')
+        url = self.driver.current_url
+        return self.get_status_code(logs, url) == 200
 
     def click_back_btn(self):
         self.driver.back()
