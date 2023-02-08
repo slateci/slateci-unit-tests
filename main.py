@@ -187,6 +187,7 @@ class WebPageBrowsing(unittest.TestCase):
 
         blog_page.wait_for_page_loaded()
         while True:
+            
             # iterate links
             links = blog_page.get_links_in_container_blog()
             number_of_links = len(links)
@@ -196,12 +197,21 @@ class WebPageBrowsing(unittest.TestCase):
                 if links[i].text == 'Older' or links[i].text == 'Newer' or links[i].get_attribute(
                         'href') == 'https://slateci.io/feed.xml':
                     continue
+
+                #Store the page url you're on before clicking to next link
+                page_before_click = self.driver.current_url
+
                 links[i].click()
+
                 self.driver.implicitly_wait(5)
                 cur_page = page.BasePage(self.driver, self.__logger)
                 self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid. -- clickthrough")
-                self.driver.back()
-                self.__logger.debug('Clicked browser [ Back ] button.')
+                
+                #Instead of pressing the back button just go back to the page url you were previously on
+                self.driver.get(page_before_click)
+
+                self.__logger.debug('Went back to previous page.')
+
                 try:
                     blog_page.wait_for_page_loaded()
                 except TimeoutException:
