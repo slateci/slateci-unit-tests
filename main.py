@@ -52,18 +52,27 @@ class WebPageBrowsing(unittest.TestCase):
         home_page.wait_for_page_loaded()
         links_in_try_slate = home_page.get_links_in_try_slate()
         number_of_links = len(links_in_try_slate)
+
         for i in range(number_of_links):
             self.__logger.info('Home Page: Try SLATE -> {}'.format(links_in_try_slate[i].text))
+
+            #Store the page url you're on before clicking to next link
+            page_before_click = self.driver.current_url 
+
             links_in_try_slate[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
             self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.  -- clickthrough")
-            self.driver.back()
-            self.__logger.debug('Clicked browser [ Back ] button.')
+
+            #Go back to the page url you were previously on
+            self.driver.get(page_before_click)
+            self.__logger.debug('Went back to previous page.')
+
             try:
                 home_page.wait_for_page_loaded()
             except TimeoutException:
                 self.__logger.error(f"{cur_page.get_page_title()} is not valid.  -- return")
+
             self.__logger.debug('Re-determining links on page.')
             links_in_try_slate = home_page.get_links_in_try_slate()
 
@@ -83,21 +92,28 @@ class WebPageBrowsing(unittest.TestCase):
         for i in range(number_of_links):
             self.__logger.info(links[i].get_attribute('href'))
 
+             #Store the page url you're on before clicking to next link
+            page_before_click = self.driver.current_url 
+
             links[i].click()
+
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
             self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.  -- clickthrough")
-
             self.__logger.info(cur_page.get_page_title())
 
             if cur_page.get_page_title() == 'SLATE / About':
                 continue
-            self.driver.back()
-            self.__logger.debug('Clicked browser [ Back ] button.')
+
+            #Go back to the page url you were previously on
+            self.driver.get(page_before_click)
+            self.__logger.debug('Went back to previous page.')
+
             try:
                 about_page.wait_for_page_loaded()
             except TimeoutException:
                 self.__logger.error(f"{cur_page.get_page_title()} is not valid.  -- return")
+
             self.__logger.debug('Re-determining links on page.')
             links = about_page.get_all_links()
 
@@ -110,20 +126,29 @@ class WebPageBrowsing(unittest.TestCase):
         tech_page.wait_for_page_loaded()
         links = tech_page.get_all_links()
         number_of_links = len(links)
+
         for i in range(number_of_links):
             # self.__logger.info(links[i].get_attribute('href'))
             self.__logger.info('Tech Page: {}'.format(links[i].text))
+
+            #Store the page url you're on before clicking to next link
+            page_before_click = self.driver.current_url 
+
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
             self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid.  -- clickthrough")
-            self.driver.back()
-            self.__logger.debug('Clicked browser [ Back ] button.')
+
+            #Go back to the page url you were previously on
+            self.driver.get(page_before_click)
+            self.__logger.debug('Went back to previous page.')
+
             # reload the page and get links
             try:
                 tech_page.wait_for_page_loaded()
             except TimeoutException:
                 self.__logger.error(f"{cur_page.get_page_title()} is not valid.  -- return")
+
             self.__logger.debug('Re-determining links on page.')
             links = tech_page.get_all_links()
 
@@ -187,7 +212,7 @@ class WebPageBrowsing(unittest.TestCase):
 
         blog_page.wait_for_page_loaded()
         while True:
-            
+
             # iterate links
             links = blog_page.get_links_in_container_blog()
             number_of_links = len(links)
@@ -199,7 +224,7 @@ class WebPageBrowsing(unittest.TestCase):
                     continue
 
                 #Store the page url you're on before clicking to next link
-                page_before_click = self.driver.current_url
+                page_before_click = self.driver.current_url 
 
                 links[i].click()
 
@@ -207,9 +232,8 @@ class WebPageBrowsing(unittest.TestCase):
                 cur_page = page.BasePage(self.driver, self.__logger)
                 self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid. -- clickthrough")
                 
-                #Instead of pressing the back button just go back to the page url you were previously on
+                #Go back to the page url you were previously on
                 self.driver.get(page_before_click)
-
                 self.__logger.debug('Went back to previous page.')
 
                 try:
@@ -235,20 +259,29 @@ class WebPageBrowsing(unittest.TestCase):
         comm_page.wait_for_page_loaded()
         links = comm_page.get_links_in_container_community()
         number_of_links = len(links)
+
         for i in range(number_of_links):
             if 'mailto:' in links[i].get_attribute('href'):
                 continue
             self.__logger.info('Community Page: {}'.format(links[i].text))
+
+            #Store the page url you're on before clicking to next link
+            page_before_click = self.driver.current_url 
+
             links[i].click()
             self.driver.implicitly_wait(5)
             cur_page = page.BasePage(self.driver, self.__logger)
             self.assertTrue(cur_page.is_page_valid(), f"{cur_page.get_page_title()} is not valid. -- clickthrough")
-            self.driver.back()
-            self.__logger.debug('Clicked browser [ Back ] button.')
+
+            #Go back to the page url you were previously on
+            self.driver.get(page_before_click)
+            self.__logger.debug('Went back to previous page.')
+
             try:
                 comm_page.wait_for_page_loaded()
             except TimeoutException:
                 self.__logger.error(f"{cur_page.get_page_title()} is not valid. -- return")
+
             self.__logger.debug('Re-determining links on page.')
             links = comm_page.get_links_in_container_community()
 
